@@ -1,0 +1,31 @@
+{
+  "name": "Demo",
+  "version": "0.0.1",
+  "description": "demo",
+  "main": "app.js",
+  "authors": [
+    "Simon O'Connor"
+  ], 
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.18",
+    "angular": "~1.4.0",
+    "ui-router": "~0.2.15",
+    "ui-router-extras": "~0.0.13",
+    "angularAMD": "~0.2.1",
+    "angular-material": "~0.9.8",
+    "angular-cookies": "~1.4.1",
+    "angularLocalStorage": "~0.3.0",
+    "lz-string": "~1.4.4"
+  },
+  "resolutions": {
+    "angular": "~1.4.0",
+    "angular-cookies": "~1.4.1"
+  }
+}
