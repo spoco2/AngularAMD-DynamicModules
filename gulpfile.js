@@ -4,7 +4,6 @@ var fs = require("fs");
 var path = require('path');
 var merge = require('merge-stream');
 var concat = require('gulp-concat');
-var addStream = require('add-stream');
 var rename = require('gulp-rename');
 var requirejsOptimize = require('gulp-requirejs-optimize');
 var templateCache = require('gulp-angular-templatecache');
@@ -35,7 +34,7 @@ function prepareTemplates(templatePath,root) {
     console.log("Prepare Templates ["+templatePath+"] --> ["+root+"]");
     return gulp.src(templatePath)
         .pipe(debug({title: "Template["+templatePath+"] "}))
-        .pipe(templateCache({root:root,module:TEMPLATE_MODULE}));
+        .pipe(templateCache({root:root,templateHeader:" ",templateFooter:" "}));
 };
 
 
@@ -87,25 +86,18 @@ function optimizeProgram(programName,excludeFolders) {
             },
             name: program,
             exclude:["app"],//excludes,
-             name: program,
-            exclude:["app"],
-            wrap: {
-                start: "define([],function() {",
-                end:    "var defer = $.Deferred();"+
-                "require(['"+program+"'], function (ctrl) {"+
-                "defer.resolve(ctrl);});"+
-                "return defer;});"
-            }
+            insertRequire:[program]
         }))
-        //Now, pull all html templates and convert them into entries directly in the angular Template cache
+          //Now, pull all html templates and convert them into entries directly in the angular Template cache
         //This is inserted into the Template module file definition where the startTag is found (/modules/Templates.js)
-        //.pipe(inject( prepareTemplates(path.join(PROGRAMDIR,programName,"/templates/**/*.html"),path.join("programs/",programName,"/templates/")),{
-        //     starttag:"<!-- inject:templates -->",
-        //    transform:function(filePath,file){
-        //         //console.log(filePath,file);
-        //         return file.contents.toString('utf8')
-        //     }
-        // }))
+        .pipe(inject( prepareTemplates(path.join(PROGRAMDIR,programName,"/templates/**/*.html"),path.join("programs/",programName,"/templates/")),{
+            starttag:"/** @preserve inject:templates **/",
+            endtag:"/** @preserve endinject **/",
+            transform:function(filePath,file){
+                    console.log(filePath,file);
+                 return file.contents.toString('utf8')
+             }
+         }))
         .pipe(rename("main.js"))
 
         //Can't add to template cache for now as can't insert before on demand request
@@ -149,12 +141,13 @@ gulp.task("optimizeApp", function () {
             },
             name: "app"
         }))
-        //Now, pull all html templates and convert them into entries directly in the angular Template cache
+         //Now, pull all html templates and convert them into entries directly in the angular Template cache
         //This is inserted into the Template module file definition where the startTag is found (/modules/Templates.js)
         .pipe(inject( prepareTemplates(APP_TEMPLATES,APP_TEMPLATE_DIR),{
-            starttag:"<!-- inject:templates -->",
+            starttag:"/** @preserve inject:templates **/",
+            endtag:"/** @preserve endinject **/",
             transform:function(filePath,file){
-                //console.log(filePath,file);
+            //    console.log(filePath,file);
                 return file.contents.toString('utf8')
             }
         }))
@@ -169,7 +162,6 @@ gulp.task("optimizeApp", function () {
 gulp.task("copyResources", function () {
     gulp.src(BASE_URL+"index.html")
         .pipe(replace("bower_components/requirejs/require.js","main-app/require.js"))
-        .pipe(replace("bower_components/angular-material/angular-material.css","main-app/styles/angular-material.css"))
         .pipe(replace("data-main=\"main-app/main.js\"","data-main=\"main-app/app.js\""))
 
         .pipe(gulp.dest(OUTDIR));
