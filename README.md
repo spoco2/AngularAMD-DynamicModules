@@ -1,4 +1,4 @@
-#AngularJS Lazy loading dynamically defined programs using AngularAMD and RequireJS (Development version)
+#AngularJS Lazy loading dynamically defined programs using AngularAMD and RequireJS
 
 A demonstration of loading sub-programs within an angular application that have been defined dynamically. (Here by a json file, but just as easily by a call to a backend service.)
 

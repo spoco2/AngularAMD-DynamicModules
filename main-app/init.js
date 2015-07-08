@@ -1,17 +1,15 @@
 console.log("=-=-=-= init.js Start =-=-=-=");
 require.config({
     baseUrl: "",
-
-    // Paths for just the core application and its controllers/factories/services
-    // ALL Components under /programs should be loaded dynamically at runtime
+    // Paths for just the core application and its controllers/factories/services  
     paths: {
-        "angular": "bower_components/angular/angular",
-        "jquery": "bower_components/jquery/dist/jquery",
-        "angular-ui-router": "bower_components/angular-ui-router/release/angular-ui-router",
-        "angularAMD": "bower_components/angularAMD/angularAMD",
+		"angular": "bower_components/angular/angular",
+		"jquery": "bower_components/jquery/dist/jquery",
+		"angular-ui-router": "bower_components/angular-ui-router/release/angular-ui-router",
+		"angularAMD": "bower_components/angularAMD/angularAMD",
 		"ngload": "bower_components/angularAMD/ngload",
-        "app": "main-app/app",
-        "templateStorage":"main-app/modules/templates"
+		"app": "main-app/app",
+		"templateStorage":"main-app/modules/templates"
     },	
 	
 
