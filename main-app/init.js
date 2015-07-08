@@ -12,7 +12,8 @@ require.config({
 		"ngload": "bower_components/angularAMD/ngload",
         "app": "main-app/app",
         "templateStorage":"main-app/modules/templates"
-    },
+    },	
+	
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
     shim: {

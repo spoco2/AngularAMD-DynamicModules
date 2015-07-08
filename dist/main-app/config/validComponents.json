@@ -1,0 +1,4 @@
+[
+  {"name":"program1", "label":"Program 1","isState":true, "authenticate":true},
+  {"name":"common_lib", "label":"Common Library","isState":false}
+]

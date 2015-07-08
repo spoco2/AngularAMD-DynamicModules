@@ -14,10 +14,10 @@ var replace = require('gulp-replace');
 
 
 var OUTDIR = "dist/";
-var BASE_URL = "app/";
+var BASE_URL = "./";
 var PROGRAMDIR = BASE_URL+"programs";
-var MAIN_APP = BASE_URL+"main-app/src/init.js";
-var CONFIG_FILE = BASE_URL+"main-app/src/init.js";
+var MAIN_APP = BASE_URL+"main-app/init.js";
+var CONFIG_FILE = BASE_URL+"main-app/init.js";
 var APP_TEMPLATE_DIR = "main-app/templates";
 var APP_TEMPLATES =  BASE_URL+APP_TEMPLATE_DIR+"/**/*.html";
 var TEMPLATE_MODULE = "templateStorage";
@@ -133,16 +133,22 @@ gulp.task("optimizeApp", function () {
             removeCombined:true,
             findNestedDependencies: true,
             normalizeDirDefines: "all",
-            optimize: "uglify2",  
+            optimize: "none",  //none for dev, uglify2 for prod
             uglify2: {
                 output: {
-                    beautify: false
+                    beautify: false,
+                    comments: function (node, comment) {  //Keep the comments that have the template cache insertion points!
+                        if(comment.value.indexOf("@preserve inject:templates") >0 || comment.value.indexOf("@preserve endinject") >0){
+                            console.log(comment.value);
+                            return true;
+                        }
+                    }
                 },
                 mangle: false    //Just during dev
             },
             name: "app"
         }))
-         //Now, pull all html templates and convert them into entries directly in the angular Template cache
+        //Now, pull all html templates and convert them into entries directly in the angular Template cache
         //This is inserted into the Template module file definition where the startTag is found (/modules/Templates.js)
         .pipe(inject( prepareTemplates(APP_TEMPLATES,APP_TEMPLATE_DIR),{
             starttag:"/** @preserve inject:templates **/",
@@ -163,7 +169,7 @@ gulp.task("optimizeApp", function () {
 gulp.task("copyResources", function () {
     gulp.src(BASE_URL+"index.html")
         .pipe(replace("bower_components/requirejs/require.js","main-app/require.js"))
-        .pipe(replace("data-main=\"main-app/main.js\"","data-main=\"main-app/app.js\""))
+        .pipe(replace("data-main=\"main-app/init.js\"","data-main=\"main-app/app.js\""))
 
         .pipe(gulp.dest(OUTDIR));
 

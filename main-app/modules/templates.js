@@ -6,16 +6,17 @@
  * In the individual programs, they do NOT insert their template cache inserts into this file, because that would require modification
  * of the main application itself.
  *
- * They don't need to, as when they load, they can be sure the main application has already fired up, and that this module exists. So their insert
- * code can run whenever it needs to.
+ * They don't need to, as when they load, they can be sure the main application has already fired up. They execute their inserts within the runblocks
  */
 define(["angular"],function(angular){
     console.log("Template Module");
     var templates = angular.module("templateStorage",[]);
 
-    <!-- inject:templates -->
-    <!-- Contents of html templates will be injected here via gulp task-->
-    <!-- endinject -->
+    templates.run(["$templateCache",function($templateCache){
+    /** @preserve inject:templates **/
+    /** Contents of html templates will be injected here via gulp task **/
+    /** @preserve endinject **/
+    }]);
 
     return templates;
 });
