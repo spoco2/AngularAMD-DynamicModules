@@ -5,9 +5,11 @@ require.config({
     // Paths for just the core application and its controllers/factories/services
     // ALL Components under /programs should be loaded dynamically at runtime
     paths: {
-        "angular": "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min",
-        "angular-ui-router": "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min",
-        "angularAMD": "//cdn.jsdelivr.net/angular.amd/0.2/angularAMD.min",
+        "angular": "bower_components/angular/angular",
+        "jquery": "bower_components/jquery/dist/jquery",
+        "angular-ui-router": "bower_components/angular-ui-router/release/angular-ui-router",
+        "angularAMD": "bower_components/angularAMD/angularAMD",
+		"ngload": "bower_components/angularAMD/ngload",
         "app": "main-app/app",
         "templateStorage":"main-app/modules/templates"
     },
