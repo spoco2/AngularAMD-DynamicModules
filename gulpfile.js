@@ -14,13 +14,14 @@ var replace = require('gulp-replace');
 
 
 var OUTDIR = "dist/";
-var BASE_URL = "D:/HTML/prodExample/";
+var BASE_URL = "app/";
 var PROGRAMDIR = BASE_URL+"programs";
-var MAIN_APP = "main-app/init.js";
-var CONFIG_FILE = BASE_URL+"main-app/init.js";
+var MAIN_APP = BASE_URL+"main-app/src/init.js";
+var CONFIG_FILE = BASE_URL+"main-app/src/init.js";
 var APP_TEMPLATE_DIR = "main-app/templates";
-var APP_TEMPLATES =  APP_TEMPLATE_DIR+"/**/*.html";
+var APP_TEMPLATES =  BASE_URL+APP_TEMPLATE_DIR+"/**/*.html";
 var TEMPLATE_MODULE = "templateStorage";
+
 
 
 function getFolders(dir) {
