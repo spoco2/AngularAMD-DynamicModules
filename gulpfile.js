@@ -86,8 +86,14 @@ function optimizeProgram(programName,excludeFolders) {
                 mangle: false    //Just during dev
             },
             name: program,
-            exclude:["app"],//excludes,
-            insertRequire:[program]
+            exclude:["app"],
+			wrap: {
+                start: "define([],function() {",
+                end:    "var defer = $.Deferred();"+
+                "require(['"+program+"'], function (ctrl) {"+
+                "defer.resolve(ctrl);});"+
+                "return defer;});"
+            }
         }))
           //Now, pull all html templates and convert them into entries directly in the angular Template cache
         //This is inserted into the Template module file definition where the startTag is found (/modules/Templates.js)

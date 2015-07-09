@@ -21,6 +21,6 @@ require.config({
         "angular-ui-router": ["angular"]
     },
 
-    // kick start application, and include all app level requirements
+    // Say we have a dep on App, so it gets loaded
     deps: ["app"]
 });

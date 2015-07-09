@@ -22,17 +22,19 @@ define(["angularAMD","require"],function(angularAMD,require) {
                         controller: "program1EditCtrl"
                     });
                    
-            }])
+            }]);
+			
+        program1_module.run(["$state", function($state){
+			console.log("Program 1 Module: Go to search state");
+			$state.go("app.program1.search");
+		}]);			
 
-            program1_module.run(function($state){
-                $state.go("app.program1.search");
-            });
-
-            //MUST RUN THIS IN HERE! Has to be run within the resolve of the require so that the config
-            //and run blocks have been defined before processQueue is called. If you call it outside of this return
-            //function, they will not be defined.
-            angularAMD.processQueue();
-        });
+		//MUST RUN THIS IN HERE! Has to be run within the resolve of the require so that the config
+		//and run blocks have been defined before processQueue is called. If you call it outside of this return
+		//function, they will not be defined.
+		angularAMD.processQueue();
+    });
+		
 
 
     return program1_module;
