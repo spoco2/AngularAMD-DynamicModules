@@ -4,7 +4,7 @@
  * live out in providers, and will once I bed things down.
  * 
  */
-define(["angularAMD","angular-ui-router","require","templateStorage"],function (angularAMD) {
+define(["angularAMD","angular-ui-router","require","templateStorage","jquery"],function (angularAMD) {
 
     //1. Define the application
     var app = angular.module("app", ["ui.router","templateStorage"]);
